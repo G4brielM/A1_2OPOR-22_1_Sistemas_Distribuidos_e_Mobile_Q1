@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+ <html lang="en">
+  <head>
+   <meta charset="UTF-8">
+   <title>API Teste</title>
+  </head>
+  <body>
+
+   <p>Retorno GET</p>
+   <div id="retGET"></div>
+   <p>Retorno POST</p>
+   <div id="retPOST"></div>
+   <p>Retorno PATCH</p>
+   <div id="retPATCH"></div>
+   <p>Retorno DELETE</p>
+   <div id="retPDELETE"></div>
+
+   <script>
+    fetch('https://jsonplaceholder.typicode.com/posts/1')
+     .then((response) => response.json())
+     .then((json) => {
+       console.log(json)
+       let texto = JSON.stringify(json, null, 2)
+       document.getElementById("retGET").innerText = texto
+    });
+    
+    fetch('https://jsonplaceholder.typicode.com/posts', {
+      method: 'POST',
+      body: JSON.stringify({
+       title: 'foo',
+       body: 'bar',
+       userId: 1 
+      }),
+      headers: {
+       'Content-type': 'application/json; charset=UTF-8',
+      },
+    })
+    .then((response) => response.json())
+    .then((json) => {
+       console.log(json)
+       let texto = JSON.stringify(json, null, 2)
+       document.getElementById("retPOST").innerText = texto
+     });
+
+    fetch("https://jsonplaceholder.typicode.com/posts/1", { 
+    method: "PATCH", 
+    headers: { 
+        "Content-Type" : "application/json" 
+    }, 
+    body: JSON.stringify( 
+    { 
+      "likes": 5 
+    } 
+    ) 
+    }) 
+    .then(response => response.json()) 
+    .then(json => {campoalterar.innerText = `${json.likes} likes`; });
+
+
+    let campoalterar = document.getElementById("retPOST");
+    campoalterar.dado = "Inserir dado!";
+    gostaContainer.dado; 
+        
+    let campoalterar = document.getElementById("retPOST");
+    function incrementLikes() { 
+    campoalterar.likes ++; 
+    fetch("https://jsonplaceholder.typicode.com/posts/1", { 
+        method: "PATCH", 
+        headers: { 
+            "Content-Type" : "application/json" 
+        }, 
+        body: JSON.stringify( 
+        { 
+            "likes": 5 
+        } 
+        ) 
+    }) 
+    .then(response => response.json()) 
+    .then(json => { 
+        campoalterar.innerText = `${json.likes} likes`; 
+    }); 
+    }
+  </script>
+ </body>
+</html>
